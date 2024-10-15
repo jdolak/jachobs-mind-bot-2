@@ -1,0 +1,5 @@
+**/libs
+main
+**/.DS_Store
+**/.vscode
+**/.env
