@@ -15,8 +15,8 @@ COPY ./go.* /${PROJECT}/
 COPY ./static /${PROJECT}/static
 COPY ./bot /${PROJECT}/bot
 
-WORKDIR /${PROJECT}
+WORKDIR /${PROJECT}/
 ENV GOPATH=/${PROJECT}/libs
-RUN go build ./bot/main.go
+RUN go build -o jachobs-mind ./bot
 #USER circleci
-CMD ["./main"]
+CMD ["./jachobs-mind"]

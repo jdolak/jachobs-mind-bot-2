@@ -6,8 +6,8 @@ all: up
 
 init:
 	-mkdir ./libs
-	GOPATH=$$(echo "$${PWD}/libs") go build ./bot/main.go
-	-rm main
+	GOPATH=$$(echo "$${PWD}/libs") go build -o ./jachobs-mind ./bot/
+	-rm jachobs-mind
 
 complile:
 	GOPATH=$$(echo "$${PWD}/libs") go install bot/tools
