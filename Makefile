@@ -7,6 +7,7 @@ all: up
 init:
 	-mkdir ./libs
 	GOPATH=$$(echo "$${PWD}/libs") go build ./src/main.go
+	-rm main
 
 up: build
 	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) up -d

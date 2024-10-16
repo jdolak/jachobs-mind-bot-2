@@ -166,7 +166,7 @@ func credit(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if len(words) == 3 {
 
 		user_data := credit_check_user(words[1])
-		caller := credit_check_user(words[1])
+		caller := credit_check_user(m.Author.ID)
 		num, err := strconv.Atoi(words[2])
 		checkErr(err)
 
@@ -176,11 +176,11 @@ func credit(s *discordgo.Session, m *discordgo.MessageCreate) {
 				num = -50
 			} else if num >= 500 || num <= -500 {
 				s.ChannelMessageSend(m.ChannelID, "no. -50 credit.")
-				user_data = credit_check_user(m.Author.ID)
+				user_data = caller
 				num = -50
 			} else if caller.Credit <= 0 {
 				s.ChannelMessageSend(m.ChannelID, "only people in good standing can give credit. -1 credit.")
-				user_data = credit_check_user(m.Author.ID)
+				user_data = caller
 				num = -1
 			}
 		}
