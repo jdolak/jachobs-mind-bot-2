@@ -177,7 +177,7 @@ func credit(s *discordgo.Session, m *discordgo.MessageCreate) {
 				s.ChannelMessageSend(m.ChannelID, "no. -50 credit.")
 				num = -50
 			} else if num >= 500 || num <= -500 {
-				s.ChannelMessageSend(m.ChannelID, "no. -50 credit.")
+				s.ChannelMessageSend(m.ChannelID, "no. -50 credit for u.")
 				user_data = caller
 				num = -50
 			} else if caller.Credit <= 0 {
