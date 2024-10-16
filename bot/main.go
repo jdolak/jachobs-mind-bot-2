@@ -50,7 +50,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		switch words[0] {
 		case "$credit":
-			credit(s, m)
+			credit(s, m, nil)
 		case "$debug":
 			s.ChannelMessageSend(m.ChannelID, "```\n"+m.Author.ID+"\n"+m.Content+"\n```")
 		}
@@ -81,6 +81,32 @@ func register_slash_commands(d *discordgo.Session, appId string, guildId string)
 		{
 			Name:        "rant",
 			Description: "Automatically creates a publish ready argument",
+			Options: []*discordgo.ApplicationCommandOption{
+				{
+					Type:        discordgo.ApplicationCommandOptionString,
+					Name:        "topic",
+					Description: "Describe what has gotten you riled up.",
+					Required:    true,
+				},
+			},
+		},
+		{
+			Name:        "credit",
+			Description: "Keeps things civilized.",
+			Options: []*discordgo.ApplicationCommandOption{
+				{
+					Type:        discordgo.ApplicationCommandOptionUser,
+					Name:        "target",
+					Description: "Who would you like praise or punish.",
+					Required:    true,
+				},
+				{
+					Type:        discordgo.ApplicationCommandOptionInteger,
+					Name:        "credit-amount",
+					Description: "be sparing...",
+					Required:    false,
+				},
+			},
 		},
 	})
 	checkErr(err)
@@ -95,6 +121,8 @@ func slash_handler(s *discordgo.Session, i *discordgo.InteractionCreate) {
 
 	case "rant":
 		slash_response(s, i, "hello")
+	case "credit":
+		credit(s, nil, i)
 	}
 }
 
