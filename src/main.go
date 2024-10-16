@@ -62,6 +62,8 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if m.Author.ID == s.State.User.ID {
 		return
+	} else if credit_perm_check(s, m) {
+		return
 	}
 
 	autoMemes(s, m)
@@ -207,6 +209,21 @@ func uwrap(uid string) string {
 func check_role(m *discordgo.MessageCreate, role string) bool {
 	for _, r := range m.Member.Roles {
 		if r == role {
+			return true
+		}
+	}
+	return false
+}
+
+func credit_perm_check(s *discordgo.Session, m *discordgo.MessageCreate) bool {
+
+	user := credit_check_user(m.Author.ID)
+
+	if !check_role(m, JACHOB_ROLE) {
+		if user.Credit <= 0 && strings.Contains(m.Content, "http") {
+			s.ChannelMessageDelete(m.ChannelID, m.Message.ID)
+			s.ChannelMessageSend(m.ChannelID, "uhhhh... "+uwrap(m.Author.ID)+" check ur credit.")
+
 			return true
 		}
 	}
