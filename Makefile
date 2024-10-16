@@ -1,4 +1,4 @@
-#include ./src/.env
+#include ./bot/.env
 
 PROJECT = jachobs-mind
 
@@ -10,7 +10,7 @@ init:
 	-rm main
 
 complile:
-	GOPATH=$$(echo "$${PWD}/libs") go install src/tools
+	GOPATH=$$(echo "$${PWD}/libs") go install bot/tools
 
 up: build
 	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) up -d

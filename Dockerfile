@@ -13,10 +13,10 @@ COPY ./.env /${PROJECT}/.env
 COPY ./libs /${PROJECT}/libs
 COPY ./go.* /${PROJECT}/
 COPY ./static /${PROJECT}/static
-COPY ./src /${PROJECT}/src
+COPY ./bot /${PROJECT}/bot
 
 WORKDIR /${PROJECT}
 ENV GOPATH=/${PROJECT}/libs
-RUN go build ./src/main.go
+RUN go build ./bot/main.go
 #USER circleci
 CMD ["./main"]
