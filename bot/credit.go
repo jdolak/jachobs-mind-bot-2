@@ -88,10 +88,11 @@ func credit(s *discordgo.Session, m *discordgo.MessageCreate, i *discordgo.Inter
 			}
 		}
 
+		past_credit := strconv.Itoa(user_data.Credit)
 		credit := user_data.Credit + num
 		db.Model(&user_data).Update("credit", credit)
 		user_data = credit_check_user(user_data.Uid)
-		response = response + uwrap(user_data.Uid) + " now has " + strconv.Itoa(user_data.Credit) + " credit"
+		response = response + uwrap(user_data.Uid) + " went from " + strconv.Itoa(user_data.Credit) + " to " + past_credit + " credit"
 
 		if m != nil {
 			s.ChannelMessageSend(m.ChannelID, response)

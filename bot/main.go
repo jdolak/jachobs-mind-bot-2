@@ -133,3 +133,16 @@ func slash_response(s *discordgo.Session, i *discordgo.InteractionCreate, msg st
 	},
 	)
 }
+
+func set_status(s *discordgo.Session) {
+	err := s.UpdateStatusComplex(discordgo.UpdateStatusData{
+		Status: "online",
+		Activities: []*discordgo.Activity{
+			{
+				Name: "you...",
+				Type: discordgo.ActivityTypeWatching,
+			},
+		},
+	})
+	checkErr(err)
+}
