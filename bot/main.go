@@ -26,6 +26,7 @@ func main() {
 
 	err = d.Open()
 	checkErr(err)
+	set_status(d)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
