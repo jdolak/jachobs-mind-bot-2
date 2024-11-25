@@ -119,6 +119,11 @@ func uwrap(uid string) string {
 }
 
 func check_role(m *discordgo.MessageCreate, role string) bool {
+
+	if m.WebhookID != "" {
+		return false
+	}
+
 	for _, r := range m.Member.Roles {
 		if r == role {
 			return true
