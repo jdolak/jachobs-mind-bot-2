@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                git branch: 'main', url: 'https://github.com/jdolak/jachobs-mind-bot-2'
+                git branch: 'main', url: 'https://github.com/jdolak/jachobs-mind-bot-2.git'
             }
         }
         stage("Setup Test Env") {
