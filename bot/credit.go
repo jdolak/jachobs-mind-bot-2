@@ -160,3 +160,40 @@ func create_db() *gorm.DB {
 
 	return db
 }
+
+func leaderboard(s *discordgo.Session, i *discordgo.InteractionCreate) {
+
+	var top []Db_credit
+	var bot []Db_credit
+
+	result := db.Order("credit desc").Limit(3).Find(&top)
+	checkErr(result.Error)
+	result = db.Order("credit asc").Limit(3).Find(&bot)
+	checkErr(result.Error)
+
+	embed := &discordgo.MessageEmbed{
+		Title: "Leaderboard",
+		Fields: []*discordgo.MessageEmbedField{
+			{
+				Name:  "Top Users",
+				Value: usr_cr_str(top[0]) + usr_cr_str(top[1]) + usr_cr_str(top[2]),
+			},
+			{
+				Name:  "Lowest Users",
+				Value: usr_cr_str(bot[0]) + usr_cr_str(bot[1]) + usr_cr_str(bot[2]),
+			},
+		},
+	}
+
+	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+		Type: discordgo.InteractionResponseChannelMessageWithSource,
+		Data: &discordgo.InteractionResponseData{
+			Embeds: []*discordgo.MessageEmbed{embed},
+		},
+	},
+	)
+}
+
+func usr_cr_str(user Db_credit) string {
+	return uwrap(user.Uid) + " : " + strconv.Itoa(user.Credit) + "\n"
+}

@@ -93,6 +93,10 @@ func register_slash_commands(d *discordgo.Session, appId string, guildId string)
 				},
 			},
 		},
+		{
+			Name:        "leaderboard",
+			Description: "Who's at the top...and bottom",
+		},
 	})
 	checkErr(err)
 	d.AddHandler(slash_handler)
@@ -108,6 +112,8 @@ func slash_handler(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		slash_response(s, i, "hello")
 	case "credit":
 		credit(s, nil, i)
+	case "leaderboard":
+		leaderboard(s, i)
 	}
 }
 
