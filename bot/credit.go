@@ -180,7 +180,7 @@ func leaderboard(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			},
 			{
 				Name:  "Lowest Users",
-				Value: usr_cr_str(bot[0]) + usr_cr_str(bot[1]) + usr_cr_str(bot[2]),
+				Value: usr_cr_str(bot[2]) + usr_cr_str(bot[1]) + usr_cr_str(bot[0]),
 			},
 		},
 	}
@@ -192,6 +192,8 @@ func leaderboard(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		},
 	},
 	)
+
+	infolog.Print("Sent leaderboard")
 }
 
 func usr_cr_str(user Db_credit) string {
