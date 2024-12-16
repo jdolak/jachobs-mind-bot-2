@@ -2,6 +2,9 @@ pipeline {
     agent any
     environment {
        PATH="/run/current-system/sw/bin"
+       DISCORD_TOKEN = credentials('DISCORD_TOKEN')
+       GUILDID = credentials('GUILDID')
+       APPID = credentials('APPID')
     }
     stages {
         stage("Checkout") {
