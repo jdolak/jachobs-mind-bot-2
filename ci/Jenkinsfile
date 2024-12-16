@@ -14,7 +14,8 @@ pipeline {
         }
         stage("Setup Test Env") {
             steps {
-                sh 'make init'
+                sh 'echo $APPID'
+                sh 'mkdir ./libs'
             }
         }
         stage("Build") {
