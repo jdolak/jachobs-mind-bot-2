@@ -6,12 +6,10 @@ import (
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
-	//dotenv "github.com/joho/godotenv"
 )
 
 func main() {
 
-	//dotenv.Load()
 	token := os.Getenv("DISCORD_TOKEN")
 	appId := os.Getenv("APPID")
 	guildID := os.Getenv("GUILDID")
