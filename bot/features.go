@@ -39,9 +39,21 @@ func ratio(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 
 		last_msg := last_msgs[1]
-		user := credit_check_user(last_msg.Author.ID)
 
-		response := "ummm " + uwrap(user.Uid) + ", you only have " + strconv.Itoa(user.Credit) + " credit..."
+		user := credit_check_user(last_msg.Author.ID)
+		caller := credit_check_user(m.Author.ID)
+
+		response := ""
+
+		if user.Credit > caller.Credit {
+			response = "idk who u ratioing, " + uwrap(user.Uid) + " has " + strconv.Itoa(user.Credit-caller.Credit) + " more credit than u."
+		} else if user.Credit > 90 {
+			response = strconv.Itoa(user.Credit) + " credit, seems legit..."
+
+		} else {
+			response = "ummm " + uwrap(user.Uid) + ", you only have " + strconv.Itoa(user.Credit) + " credit..."
+		}
+
 		s.ChannelMessageSend(m.ChannelID, response)
 		infolog.Print(m.Author.ID + " used ratio on " + user.Uid)
 
