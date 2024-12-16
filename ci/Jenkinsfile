@@ -14,6 +14,7 @@ pipeline {
         }
         stage("Setup Test Env") {
             steps {
+                sh 'echo hello'
                 sh 'echo $APPID'
                 sh 'mkdir ./libs'
             }
