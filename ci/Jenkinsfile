@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    environment {
+       PATH="/run/current-system/sw/bin"
+    }
+    stages {
+        stage("Checkout") {
+            steps {
+                git branch: 'main', url: 'https://github.com/jdolak/jachobs-mind-bot-2'
+            }
+        }
+        stage("Setup Test Env") {
+            steps {
+                sh 'make init'
+            }
+        }
+        stage("Build") {
+            steps {
+                sh 'make build'
+            }
+        }
+        stage("Test") {
+            steps {
+                sh 'make up'
+            }
+        }
+        stage("Deploy") {
+            steps {
+                //sh 'make deploy'
+                sh 'echo "skipping for now"'
+            }
+        }
+    }
+    post {
+        always {
+            sh 'make down'
+        }
+    }
+}

@@ -9,7 +9,7 @@ RUN touch /botdata/data.db
 RUN chown -R circleci /botdata
 RUN chmod -R 777 /botdata
 
-COPY ./.env /${PROJECT}/.env
+#COPY ./.env /${PROJECT}/.env
 COPY ./libs /${PROJECT}/libs
 COPY ./go.* /${PROJECT}/
 COPY ./static /${PROJECT}/static

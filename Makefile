@@ -6,6 +6,7 @@ all: up
 
 init:
 	-mkdir ./libs
+	touch .env
 	GOPATH=$$(echo "$${PWD}/libs") go build -o ./jachobs-mind ./bot/
 	-rm jachobs-mind
 
