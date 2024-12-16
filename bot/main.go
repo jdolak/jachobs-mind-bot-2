@@ -45,6 +45,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	autoMemes(s, m)
+	ratio(s, m)
 
 	if strings.HasPrefix(m.Content, "$") {
 		words := strings.Split(m.Content, " ")
@@ -54,27 +55,10 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			credit(s, m, nil)
 		case "$debug":
 			s.ChannelMessageSend(m.ChannelID, "```\n"+m.Author.ID+"\n"+m.Content+"\n```")
+			infolog.Print(m.Author.ID + " : " + m.Content)
 		}
 	}
 
-}
-
-func autoMemes(s *discordgo.Session, m *discordgo.MessageCreate) {
-
-	auto_words := []string{"1984"}
-
-	for _, word := range auto_words {
-		if strings.Contains(m.Content, word) {
-
-			filepath := MEME_FOLDER + word + ".gif"
-			file, err := os.Open(filepath)
-			checkErr(err)
-
-			_, err = s.ChannelFileSend(m.ChannelID, filepath, file)
-			checkErr(err)
-
-		}
-	}
 }
 
 func register_slash_commands(d *discordgo.Session, appId string, guildId string) {

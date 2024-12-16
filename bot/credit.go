@@ -94,6 +94,8 @@ func credit(s *discordgo.Session, m *discordgo.MessageCreate, i *discordgo.Inter
 		user_data = credit_check_user(user_data.Uid)
 		response = response + uwrap(user_data.Uid) + " went from " + past_credit + " to " + strconv.Itoa(user_data.Credit) + " credit"
 
+		infolog.Print(author + " used credit on " + user_data.Uid)
+
 		if m != nil {
 			s.ChannelMessageSend(m.ChannelID, response)
 		} else {
@@ -140,6 +142,8 @@ func credit_perm_check(s *discordgo.Session, m *discordgo.MessageCreate) bool {
 		if user.Credit <= 0 && strings.Contains(m.Content, "http") {
 			s.ChannelMessageDelete(m.ChannelID, m.Message.ID)
 			s.ChannelMessageSend(m.ChannelID, "uhhhh... "+uwrap(m.Author.ID)+" check ur credit.")
+
+			infolog.Print(user.Uid + " got censored for inadequate credit")
 
 			return true
 		}
