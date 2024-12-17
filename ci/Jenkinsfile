@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
        PATH="/run/current-system/sw/bin"
-       //DISCORD_TOKEN = credentials('DISCORD_TOKEN')
-       //GUILDID = credentials('GUILDID')
-       //APPID = credentials('APPID')
+       DISCORD_TOKEN = credentials('DISCORD_TOKEN')
+       GUILDID = credentials('GUILDID')
+       APPID = credentials('APPID')
     }
     stages {
         stage("Checkout") {
@@ -14,9 +14,8 @@ pipeline {
         }
         stage("Setup Test Env") {
             steps {
-            //    sh 'echo hello'
-            //    sh 'echo $APPID'
-                sh 'mkdir ./libs'
+                sh 'mkdir ./libs || true'
+                sh 'touch .env'
             }
         }
         stage("Build") {
@@ -27,6 +26,7 @@ pipeline {
         stage("Test") {
             steps {
                 sh 'make up'
+                sh './ci/tests.sh'
             }
         }
         stage("Deploy") {
