@@ -5,6 +5,7 @@ pipeline {
        DISCORD_TOKEN = credentials('DISCORD_TOKEN')
        GUILDID = credentials('GUILDID')
        APPID = credentials('APPID')
+       WEBHOOKTOKEN = credentials('WEBHOOKTOKEN')
     }
     stages {
         stage("Checkout") {
@@ -14,6 +15,7 @@ pipeline {
         }
         stage("Setup Test Env") {
             steps {
+                sh 'echo $APPID'
                 sh 'mkdir ./libs || true'
                 sh 'touch .env'
             }
@@ -25,8 +27,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh 'make up'
-                sh './ci/tests.sh'
+                sh 'make test'
             }
         }
         stage("Deploy") {

@@ -40,3 +40,10 @@ restart: down
 k8s:
 	kubectl apply -f ./deploy/k8s/
 
+test-up:
+	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT)-test up -d
+	bash ./ci/tests.sh
+
+test-down:
+	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT)-test down
+
