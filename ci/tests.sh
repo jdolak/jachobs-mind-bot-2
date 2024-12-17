@@ -1,5 +1,5 @@
 
-sleep 5
+sleep 10
 
 WEBHOOK_URL="https://discord.com/api/webhooks/$WEBHOOKTOKEN"
 
