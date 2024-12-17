@@ -27,7 +27,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh 'make test'
+                sh 'make test-up'
             }
         }
         stage("Deploy") {
@@ -39,7 +39,7 @@ pipeline {
     }
     post {
         always {
-            sh 'make down'
+            sh 'make test-down'
         }
     }
 }
