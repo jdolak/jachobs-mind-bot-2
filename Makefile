@@ -5,19 +5,20 @@ PROJECT = jachobs-mind
 all: up
 
 init:
-	-mkdir ./libs
 	touch .env
 	GOPATH=$$(echo "$${PWD}/libs") go build -o ./jachobs-mind ./bot/
 	-rm jachobs-mind
 
-complile:
-	GOPATH=$$(echo "$${PWD}/libs") go install bot/tools
 
 up: build
-	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) up -d
+	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose-run.yml -p $(PROJECT) up -d
 
 build:
-	PROJECT=$(PROJECT) docker build -t $(PROJECT)-image .
+	PROJECT=$(PROJECT) docker build -f Dockerfile-Build -t jdolakk/$(PROJECT)-build-image .
+	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose-build.yml -p $(PROJECT) create
+	docker cp $(PROJECT)-bot-build-1:/$(PROJECT)/bin/$(PROJECT) ./bin/
+
+	PROJECT=$(PROJECT) docker build -f Dockerfile-Run -t jdolakk/$(PROJECT)-image .
 
 down:
 	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) down
@@ -46,4 +47,6 @@ test-up:
 
 test-down:
 	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT)-test down
+
+
 

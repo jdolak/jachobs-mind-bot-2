@@ -1,0 +1,14 @@
+FROM alpine 
+
+ENV PROJECT=jachobs-mind
+
+RUN mkdir /${PROJECT}
+RUN mkdir /botdata
+RUN touch /botdata/data.db
+
+COPY ./static /${PROJECT}/static
+COPY ./bin /${PROJECT}/bin
+
+WORKDIR /${PROJECT}/
+
+CMD ["./bin/jachobs-mind"]

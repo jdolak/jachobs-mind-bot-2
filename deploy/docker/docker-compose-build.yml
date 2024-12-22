@@ -1,0 +1,15 @@
+services: 
+  bot-build:
+    image: jdolakk/${PROJECT}-build-image
+    env_file:
+      - ../../.env
+    restart: no
+    deploy:
+      resources:    
+        limits:
+          memory: 200MB
+    volumes:
+      - ../../bin:/${PROJECT}/bin
+
+volumes:
+  discorddata:
