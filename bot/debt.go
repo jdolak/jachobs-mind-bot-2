@@ -22,11 +22,11 @@ type Db_debt struct {
 
 func split(s *discordgo.Session, i *discordgo.InteractionCreate) {
 
-	values := debt_parse(s, i)
+	//values := debt_parse(s, i)
 	// TODO : same as owes but subtract query ammount is:
-	query_amount, err := strconv.Atoi(values[len(values)-1])
-	checkErr(err)
-	indiv_amount := query_amount/len(values) - 1
+	//query_amount, err := strconv.Atoi(values[len(values)-1])
+	//checkErr(err)
+	//indiv_amount := query_amount/len(values) - 1
 
 }
 func owes(s *discordgo.Session, i *discordgo.InteractionCreate) {
