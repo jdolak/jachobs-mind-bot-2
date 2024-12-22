@@ -21,3 +21,8 @@ WORKDIR /${PROJECT}/
 #ENV GOPATH=/${PROJECT}/libs
 RUN go build -o ./bin/${PROJECT} ./bot 
 #USER circleci
+
+FROM alpine:latest
+
+COPY --from=builder ./bin/${PROJECT} .
+
