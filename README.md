@@ -1,12 +1,21 @@
+# Jachob's Mind 2
 
-## Credit
+## Into
+
+Jachob's Mind is a discord bot that fulfills niches that I have desired in my discord servers. 
+The original Jachob's Mind was a bot that I wrote in highschool to keep track of my schools changing bell schedule.
+This new bot switches from Python to Go and acts as a bookkeeper for my group of friend's activites in and out of discord.
+
+## Features
+
+### Credit
 
 Credit is a virtual "currency" that is a flexible, zero sum, and peer modifiable.  
 It is purposely generic to fit any theme of the discord server. Credit can represent points in a game, money in a store, or reputation in a forum.
 
 Credit can also be tied to certain bot and server features, allowing users to unlock or purchase different abilities.  
 
-### Commands
+#### Commands
 
 To view a user's current credit amount:
 ```
@@ -22,7 +31,7 @@ To view the top and bottom three credit holders:
 ```
 
 
-## Debt
+### Debt
 
 While *credit* acts as a global amount that is each user can modify, *debt* represents a relationship between two users. While it can be flexible, the goal of *debt* to be an simple way of keeping track of money owed IRL.
 
@@ -30,7 +39,7 @@ Whether its spotting someone for lunch or splitting expenses on a trip, *debt* m
 
 This makes no guarantees about getting your money back, just offers a convenient way to bookkeep.
 
-### Commands
+#### Commands
 
 To split a bill between muliple people, including yourself:
 ```
