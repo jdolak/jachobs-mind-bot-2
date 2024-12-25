@@ -9,20 +9,21 @@ RUN touch /botdata/data.db
 RUN chown -R circleci /botdata
 RUN chmod -R 777 /botdata
 
-#COPY ./.env /${PROJECT}/.env
-COPY ./libs /${PROJECT}/libs
-COPY ./go.* /${PROJECT}/
-COPY ./static /${PROJECT}/static
-COPY ./bot /${PROJECT}/bot
+WORKDIR /${PROJECT}/
 
+COPY ./go.* /${PROJECT}/
+RUN go mod download
+
+COPY ./bot /${PROJECT}/bot
 RUN mkdir /${PROJECT}/bin
 
-WORKDIR /${PROJECT}/
-#ENV GOPATH=/${PROJECT}/libs
-RUN go build -o ./bin/${PROJECT} ./bot 
-#USER circleci
+RUN go build -o /${PROJECT}/bin/${PROJECT} ./bot 
+COPY ./static /${PROJECT}/static
 
-FROM alpine:latest
+CMD ["/jachobs-mind/bin/jachobs-mind"]
+#FROM ubuntu:latest
 
-COPY --from=builder ./bin/${PROJECT} .
+#ENV PROJECT=jachobs-mind
+#COPY --from=builder /${PROJECT}/bin/${PROJECT} .
+#CMD ["/jachobs-mind"]
 

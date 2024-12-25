@@ -48,7 +48,7 @@ func owes(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	}
 	slash_response(s, i, response)
 }
-func claim(s *discordgo.Session, i *discordgo.InteractionCreate) {
+func loan(s *discordgo.Session, i *discordgo.InteractionCreate) {
 
 	response := ""
 

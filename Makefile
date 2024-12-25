@@ -1,6 +1,7 @@
 #include ./bot/.env
 
 PROJECT = jachobs-mind
+SOURCES = $(wildcard ./bot/*.go)
 
 all: up
 
@@ -13,13 +14,13 @@ init:
 up: build
 	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) up -d
 
-build:
-	PROJECT=$(PROJECT) docker build -f Dockerfile -t jdolakk/$(PROJECT)-build-image .
+build: $(SOURCES) Dockerfile
+	PROJECT=$(PROJECT) docker build -f Dockerfile -t jdolakk/$(PROJECT)-image .
 #	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose-build.yml -p $(PROJECT) create
-	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) create
+#	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) create
 #	docker cp $(PROJECT)-bot-build-1:/$(PROJECT)/bin/$(PROJECT) ./bin/
 
-	PROJECT=$(PROJECT) docker build -f Dockerfile-Run -t jdolakk/$(PROJECT)-image .
+#	PROJECT=$(PROJECT) docker build -f Dockerfile-Run -t jdolakk/$(PROJECT)-image .
 
 down:
 	PROJECT=$(PROJECT) docker compose -f ./deploy/docker/docker-compose.yml -p $(PROJECT) down
