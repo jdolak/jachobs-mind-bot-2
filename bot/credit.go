@@ -156,7 +156,7 @@ func create_db() *gorm.DB {
 	db, err := gorm.Open(sqlite.Open("/botdata/data.db"), &gorm.Config{})
 	checkErr(err)
 
-	db.AutoMigrate(&Db_credit{})
+	db.AutoMigrate(&Db_credit{}, &Db_debt{})
 
 	return db
 }

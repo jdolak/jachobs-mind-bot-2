@@ -13,7 +13,7 @@ import (
 // e.g. user1-user2 = user1 owes user2
 type Db_debt struct {
 	gorm.Model
-	UidRelation string
+	Uidrelation string
 	Lender      string
 	Borrower    string
 	Venmo       string
@@ -38,7 +38,10 @@ func owes(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	query_amount, err := strconv.Atoi(values[len(values)-1])
 	checkErr(err)
 
-	for _, u := range values {
+	//for i, u := range values {
+	for i := 0; i < len(values)-1; i++ {
+
+		u := values[i]
 		relation := debt_relation(caller, u)
 		inverse := debt_relation(u, caller)
 
@@ -117,12 +120,12 @@ func debt_parse(s *discordgo.Session, i *discordgo.InteractionCreate) []string {
 func debt_query(relation string) int {
 	var db_debt Db_debt
 
-	result := db.First(&db_debt, "UidRelation = ?", relation)
+	result := db.First(&db_debt, "uidrelation = ?", relation)
 
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		db.Create(&Db_debt{UidRelation: relation, Owes: 0})
+		db.Create(&Db_debt{Uidrelation: relation, Owes: 0})
 
-		result = db.First(&db_debt, "uid = ?", relation)
+		result = db.First(&db_debt, "uidrelation = ?", relation)
 		checkErr(result.Error)
 
 	} else if result.Error != nil {
@@ -137,10 +140,10 @@ func debt_query(relation string) int {
 func debt_update(relation string, amount int) int {
 	var db_debt Db_debt
 
-	result := db.First(&db_debt, "UidRelation = ?", relation)
+	result := db.First(&db_debt, "uidrelation = ?", relation)
 
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		db.Create(&Db_debt{UidRelation: relation, Owes: 0})
+		db.Create(&Db_debt{Uidrelation: relation, Owes: 0})
 
 		result = db.First(&db_debt, "uid = ?", relation)
 		checkErr(result.Error)
@@ -161,6 +164,7 @@ func debt_relation(user1 string, user2 string) string {
 }
 
 func debt_response(amount int, relation string, inverse string, caller string, user string, response string) string {
+
 	if amount < 0 {
 		net_amount := amount * -1
 		debt_update(relation, 0)
@@ -171,9 +175,10 @@ func debt_response(amount int, relation string, inverse string, caller string, u
 		debt_update(inverse, 0)
 		response = response + uwrap(caller) + " and " + uwrap(user) + " are even" + "\n"
 	} else {
-		debt_update(relation, 0)
-		debt_update(inverse, amount)
-		response = response + uwrap(user) + " now owes " + strconv.Itoa(amount) + " to " + uwrap(caller) + "\n"
+		net_amount := amount
+		debt_update(inverse, 0)
+		debt_update(relation, net_amount)
+		response = response + uwrap(user) + " now owes " + strconv.Itoa(net_amount) + " to " + uwrap(caller) + "\n"
 	}
 
 	return response
